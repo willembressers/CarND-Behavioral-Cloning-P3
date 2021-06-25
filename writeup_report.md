@@ -2,6 +2,17 @@
 
 [![Udacity - Self-Driving Car NanoDegree](https://s3.amazonaws.com/udacity-sdc/github/shield-carnd.svg)](http://www.udacity.com/drive)
 
+[//]: # (Image References)
+
+[image1]: ./data/processed/model.png "Model Visualization"
+[image2]: ./data/processed/training_history.png "Training history"
+[image3]: ./data/processed/0_flipped.png "Flipped"
+[image4]: ./data/processed/1_translated.png "Translated"
+[image5]: ./data/processed/9_brighten.png "Brightend"
+[image6]: ./data/processed/10_translated.png "Flipped & translated"
+[image7]: ./data/processed/2_brighten.png "Flipped & translated & brightend"
+
+
 ### Files Submitted & Code Quality
 
 #### 1. Submission includes all required files and can be used to run the simulator in autonomous mode
@@ -111,29 +122,8 @@ The final step was to run the simulator to see how well the car was driving arou
 
 The final model architecture consisted of a convolution neural network with five feature layers, and a dropout layer 
 
-```python
-# feature layers
-model.add(Conv2D(24, (5, 5), activation='elu', strides=(2, 2)))
-model.add(Conv2D(36, (5, 5), activation='elu', strides=(2, 2)))
-model.add(Conv2D(48, (5, 5), activation='elu', strides=(2, 2)))
-model.add(Conv2D(64, (3, 3), activation='elu'))
-model.add(Conv2D(64, (3, 3), activation='elu'))
-model.add(Dropout(0.5))
-```
-
-and 1 flatten layer followed by 5 classification layers
-
-```python
-# classification layers
-model.add(Flatten())
-model.add(Dense(500, activation='elu'))
-model.add(Dense(100, activation='elu'))
-model.add(Dense(50, activation='elu'))
-model.add(Dense(10, activation='elu'))
-
-# just 1 output unit (steering angle)
-model.add(Dense(1))
-```
+![final][image1]
+*final model*
 
 #### 3. Creation of the Training Set & Training Process
 
@@ -141,9 +131,29 @@ To capture good driving behavior, I recorded three laps on track one using cente
 
 During training i randomly select an image (left, center, right) and apply augmentation (horizontal flipping, translation, brightness) on the image (and steering angle), in order to make the model more robust.
 
+![flipped][image3]
+*Left = original image / right = flipped image*
+
+![translated][image4]
+*Left = original image / right = translated image*
+
+![brightend][image5]
+*Left = original image / right = Brightend image*
+
+The augmentation section could also apply multiple augmentations per image.
+
+![flipped-translated][image6]
+*Left = original image / right = flipped & translated image*
+
+![flipped-translated-brightend][image7]
+*Left = original image / right = flipped & translated & brightend image*
+
 I've made a generator that loops over all the data in random order (basically shuffling) processes it, and hand it over to the model.
 
 I've set the number of epochs to 10, and i've devided the trainingset to the number of epochs, so in theory all images could be addressed once.
+
+![training-history][image2]
+*training history*
 
 #### 4. Final video
 
