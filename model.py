@@ -150,7 +150,6 @@ def plot_history(history):
     plt.plot(history.history['val_loss'], label='Validation Loss')
     plt.legend(loc='upper right')
     plt.ylabel('Loss')
-    plt.ylim([0,1.0])
 
     # plot the learning rate
     plt.subplot(2, 1, 2)
